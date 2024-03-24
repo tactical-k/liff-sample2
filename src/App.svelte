@@ -7,13 +7,8 @@
     });
   }
 
-  async function getUserProfile() {
-    await liff.getProfile()
-  }
-
   let promise = init();
 
-  let userProfile = getUserProfile();
 
   let os = liff.getOS();
 </script>
@@ -23,25 +18,16 @@
   {#await promise}
     <p>LIFF init...</p>
   {:then}
-  <div>
-    { os }
-  </div>
-  <div>
-    {#if (liff.isLoggedIn()) }
-      {#await userProfile}
-        <p>読込中</p>
-      {:then} 
-        <div>
-          {userProfile.userId}
-        </div>
-        <div>
-          {userProfile.displayName}
-        </div>
-      {/await}
-    {:else}
-    ログインしてください
-    {/if}
-  </div>
+    <p>LIFF init successed.</p>
+    <p>
+      {#if liff.isLoggedIn()}
+        <p>ログイン済</p>
+        { liff.getProfile() }
+      {:else}
+        <p>ログイン前</p>
+      {/if}
+
+    </p>
   {:catch e}
     <p>LIFF init failed.</p>
     <p><code>{`${e}`}</code></p>
