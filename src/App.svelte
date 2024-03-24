@@ -29,8 +29,8 @@
         <p>ログイン済</p>
         {#await userLineProfile}
           <p>読込中</p>
-        {:then} 
-          <p>{userLineProfile}</p>
+        {:then user} 
+          <p>{user}</p>
         {/await}
       {:else}
         <p>ログイン前</p>
