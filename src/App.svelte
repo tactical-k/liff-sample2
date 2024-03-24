@@ -34,16 +34,16 @@
         'https://huge-frog-75.hasura.app/v1/graphql',
         {
           query: `
-            mutation InsertData($lineUuid: String!, $data: String!) {
-              insert_user_one(object: { line_uuid: $lineUuid, data: $data }) {
+            mutation InsertData {
+              insert_user_one(object: { line_uuid: 'svelte', data: 'svelte' }) {
                 id
               }
             }
           `,
-          variables: {
-            lineUuid: userUuid,
-            data: formData
-          },
+          // variables: {
+          //   lineUuid: userUuid,
+          //   data: formData
+          // },
           headers: {
             'content-type': 'application/json',
             'x-hasura-admin-secret': import.meta.env.HASURA_ADMIN_SECRET
