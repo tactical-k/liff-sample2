@@ -1,8 +1,8 @@
 <script>
   import { onMount } from 'svelte';
   import liff from "@line/liff";
-  // import Textfield from '@smui/textfield';
-  // import axios from 'axios';
+  import Textfield from '@smui/textfield';
+  import axios from 'axios';
 
   async function init() {
     return await liff.init({
@@ -24,35 +24,35 @@
     }
   }
 
-  // let formData = '';
+  let formData = '';
 
 
-  // const handleSubmit = async () => {
-  //   console.log('submit');
-  //   try {
-  //     const response = await axios.post(
-  //       'https://huge-frog-75.hasura.app/v1/graphql',
-  //       {
-  //         query: `
-  //           mutation InsertData($lineUuid: String!, $data: String!) {
-  //             insert_user_one(object: { line_uuid: $lineUuid, data: $data }) {
-  //               id
-  //             }
-  //           }
-  //         `,
-  //         variables: {
-  //           lineUuid: userUuid,
-  //           data: formData
-  //         },
-  //         headers: {
-  //           'x-hasura-admin-secret': import.meta.env.HASURA_ADMIN_SECRET
-  //         }
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  const handleSubmit = async () => {
+    console.log('submit');
+    try {
+      await axios.post(
+        'https://huge-frog-75.hasura.app/v1/graphql',
+        {
+          query: `
+            mutation InsertData($lineUuid: String!, $data: String!) {
+              insert_user_one(object: { line_uuid: $lineUuid, data: $data }) {
+                id
+              }
+            }
+          `,
+          variables: {
+            lineUuid: userUuid,
+            data: formData
+          },
+          headers: {
+            'x-hasura-admin-secret': import.meta.env.HASURA_ADMIN_SECRET
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   onMount(async () => {
     await promise;
@@ -61,19 +61,15 @@
 </script>
 
 <main>
-  <!-- <div>
-    <Textfield textarea bind:value={formData}></Textfield>
-    <button on:click={handleSubmit}>送信</button>
-  </div> -->
   {#await promise then}
     {#if liff.isLoggedIn()}
       {#if userName}
         <p>こんにちは。{userName}さん</p>
         <p>あなたの目標を教えて下さい。</p>
-        <!-- <div>
+        <div>
           <Textfield textarea bind:value={formData}></Textfield>
           <button on:click={handleSubmit}>送信</button>
-        </div> -->
+        </div>
         <p>ログイン済</p>
       {/if}
     {:else}
