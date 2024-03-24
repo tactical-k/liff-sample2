@@ -11,6 +11,10 @@
 
   const userLineProfile = async () => {
     return await liff.getProfile()
+      .then((profile) => {
+        return profile.displayName;
+
+      });
   } 
 </script>
 
@@ -23,7 +27,11 @@
     <p>
       {#if liff.isLoggedIn()}
         <p>ログイン済</p>
-        {userLineProfile}
+        {#await userLineProfile}
+          <p>読込中</p>
+        {:then} 
+          <p>{userLineProfile}</p>
+        {/await}
       {:else}
         <p>ログイン前</p>
       {/if}
