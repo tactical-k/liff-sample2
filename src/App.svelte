@@ -10,7 +10,18 @@
   let promise = init();
 
   let os = liff.getOS();
-  let profile = liff.getProfile();
+  let userProfile = () => { liff.getProfile() 
+    .then((profile) => {
+      return {
+        userId: profile.userId,
+        displayName: profile.displayName
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    });
+
+  }
 </script>
 
 <main>
@@ -23,10 +34,8 @@
   </div>
   <div>
     {#if (liff.isLoggedIn()) }
-    { profile.userId }
-    { profile.displayName }
-    { profile.pictureUrl }
-    { profile.statusMessage }
+    { userProfile.userId }
+    { userProfile.displayName }
     {:else}
     ログインしてください
     {/if}
