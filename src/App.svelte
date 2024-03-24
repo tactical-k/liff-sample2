@@ -8,15 +8,36 @@
   }
 
   let promise = init();
+
+  let os = liff.getOS();
+  let profile = liff.getProfile();
 </script>
 
 <main>
+  <h1>create-liff-app</h1>
+  {#await promise}
+    <p>LIFF init...</p>
+  {:then}
   <div>
-    { liff.getOS() }
+    { os }
   </div>
   <div>
-    { liff.getProfile() }
+    {#if (liff.isLoggedIn()) }
+    { profile.userId }
+    { profile.displayName }
+    { profile.pictureUrl }
+    { profile.statusMessage }
+    {:else}
+    ログインしてください
+    {/if}
   </div>
+  {:catch e}
+    <p>LIFF init failed.</p>
+    <p><code>{`${e}`}</code></p>
+  {/await}
+  <a href="https://developers.line.biz/ja/docs/liff/" target="_blank" rel="noreferrer">
+    LIFF Documentation
+  </a>
 </main>
 
 <style>
