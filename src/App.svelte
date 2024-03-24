@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import liff from "@line/liff";
 
   async function init() {
@@ -8,13 +9,21 @@
   }
 
   let promise = init();
+  let user;
 
-  let userLineProfile = () => {
-    liff.getProfile()
-      .then((profile) => {
-        return profile.displayName;
-      });
-  } 
+  const getUserLineProfile = async () => {
+    try {
+      const profile = await liff.getProfile();
+      user = profile.displayName;
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
+
+  onMount(async () => {
+    await promise;
+    await getUserLineProfile();
+  });
 </script>
 
 <main>
@@ -23,19 +32,15 @@
     <p>LIFF init...</p>
   {:then}
     <p>LIFF init successed.</p>
-    {#await userLineProfile}
-      <p>読込中</p>
-    {:then userName} 
-      <p>読み込み完了</p>
-      <p>{userName}</p>
-    {/await}
+    {#if user}
+      <p>{user}</p>
+    {/if}
     <p>
       {#if liff.isLoggedIn()}
         <p>ログイン済</p>
       {:else}
         <p>ログイン前</p>
       {/if}
-
     </p>
   {:catch e}
     <p>LIFF init failed.</p>
