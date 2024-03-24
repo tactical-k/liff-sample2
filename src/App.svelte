@@ -45,6 +45,7 @@
             data: formData
           },
           headers: {
+            'content-type': 'application/json',
             'x-hasura-admin-secret': import.meta.env.HASURA_ADMIN_SECRET
           }
         }
