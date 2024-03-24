@@ -9,8 +9,9 @@
 
   let promise = init();
 
-
-  let os = liff.getOS();
+  const userLineProfile = async () => {
+    return await liff.getProfile()
+  } 
 </script>
 
 <main>
@@ -22,7 +23,7 @@
     <p>
       {#if liff.isLoggedIn()}
         <p>ログイン済</p>
-        { (await liff.getProfile()).userId }
+        {userLineProfile}
       {:else}
         <p>ログイン前</p>
       {/if}
