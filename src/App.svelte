@@ -7,7 +7,13 @@
     });
   }
 
+  async function getUserProfile() {
+    await liff.getProfile()
+  }
+
   let promise = init();
+
+  let userProfile = getUserProfile();
 
   let os = liff.getOS();
   let userProfile = () => { liff.getProfile() 
@@ -20,6 +26,7 @@
     .catch((err) => {
       console.error(err)
     });
+    
 
   }
 </script>
@@ -34,8 +41,16 @@
   </div>
   <div>
     {#if (liff.isLoggedIn()) }
-    { userProfile.userId }
-    { userProfile.displayName }
+      {#await userProfile}
+        <p>読込中</p>
+      {:then } 
+        <div>
+          {userProfile.userId}
+        </div>
+        <div>
+          {userProfile.displayName}
+        </div>
+      {/await}
     {:else}
     ログインしてください
     {/if}
