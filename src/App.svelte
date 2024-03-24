@@ -12,10 +12,10 @@
 
 <main>
   <div>
-    { liff.getOS}
+    { liff.getOS() }
   </div>
   <div>
-    { liff.getProfile }
+    { liff.getProfile() }
   </div>
 </main>
 
