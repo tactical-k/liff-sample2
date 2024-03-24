@@ -8,6 +8,13 @@
   }
 
   let promise = init();
+
+  let userLineProfile = () => {
+    liff.getProfile()
+      .then((profile) => {
+        return profile.displayName;
+      });
+  } 
 </script>
 
 <main>
@@ -15,7 +22,21 @@
   {#await promise}
     <p>LIFF init...</p>
   {:then}
-    <p>LIFF init succeeded.</p>
+    <p>LIFF init successed.</p>
+    {#await userLineProfile}
+      <p>読込中</p>
+    {:then userName} 
+      <p>読み込み完了</p>
+      <p>{userName}</p>
+    {/await}
+    <p>
+      {#if liff.isLoggedIn()}
+        <p>ログイン済</p>
+      {:else}
+        <p>ログイン前</p>
+      {/if}
+
+    </p>
   {:catch e}
     <p>LIFF init failed.</p>
     <p><code>{`${e}`}</code></p>
