@@ -9,13 +9,14 @@
 
   let promise = init();
 
-  let userLineProfile = async () => {
-    return await liff.getProfile()
+  async function getLineProfile() {
+    await liff.getProfile()
       .then((profile) => {
         return profile.displayName;
-
       });
   } 
+
+  let userLineProfile = getLineProfile();
 </script>
 
 <main>
@@ -24,14 +25,14 @@
     <p>LIFF init...</p>
   {:then}
     <p>LIFF init successed.</p>
+    {#await userLineProfile}
+      <p>読込中</p>
+    {:then userName} 
+      <p>{userName}</p>
+    {/await}
     <p>
       {#if liff.isLoggedIn()}
         <p>ログイン済</p>
-        {#await userLineProfile}
-          <p>読込中</p>
-        {:then user} 
-          <p>{user}</p>
-        {/await}
       {:else}
         <p>ログイン前</p>
       {/if}
