@@ -16,20 +16,7 @@
   let userProfile = getUserProfile();
 
   let os = liff.getOS();
-  let userProfile = () => { liff.getProfile() 
-    .then((profile) => {
-      return {
-        userId: profile.userId,
-        displayName: profile.displayName
-      }
-    })
-    .catch((err) => {
-      console.error(err)
-    });
-    
-
-  }
-</script>
+ipt>
 
 <main>
   <h1>create-liff-app</h1>
@@ -43,7 +30,7 @@
     {#if (liff.isLoggedIn()) }
       {#await userProfile}
         <p>読込中</p>
-      {:then } 
+      {:then} 
         <div>
           {userProfile.userId}
         </div>
