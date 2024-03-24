@@ -28,27 +28,29 @@
 
 
   const handleSubmit = async () => {
-    console.log('submit');
     try {
       await axios.post(
         'https://huge-frog-75.hasura.app/v1/graphql',
         {
           query: `
-            mutation InsertData {
-              insert_user_one(object: { line_uuid: 'svelte', data: 'svelte' }) {
-                id
-              }
+          mutation MyMutation($data: String!, $uuid: String!) {
+            insert_user_one(object: {data: $data, line_uuid: $uuid}) {
+              id
             }
+          }
           `,
-          // variables: {
-          //   lineUuid: userUuid,
-          //   data: formData
-          // },
+          variables: {
+            "uuid": userUuid,
+            "data": formData
+          },
           headers: {
             'content-type': 'application/json',
-            'x-hasura-admin-secret': import.meta.env.HASURA_ADMIN_SECRET
+            'x-hasura-admin-secret': import.meta.env.VITE_HASURA_ADMIN_SECRET
           }
         }
+      ).then((response) => {
+        console.log(response);
+      }
       );
     } catch (error) {
       console.error(error);
@@ -62,6 +64,13 @@
 </script>
 
 <main>
+  <!-- <div>
+    <p>データ</p>
+    <Textfield textarea bind:value={formData}></Textfield>
+    <p>UUID</p>
+    <Textfield textarea bind:value={userUuid}></Textfield>
+    <button on:click={handleSubmit}>送信</button>
+  </div> -->
   {#await promise then}
     {#if liff.isLoggedIn()}
       {#if userName}
