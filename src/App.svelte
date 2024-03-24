@@ -22,7 +22,7 @@
     <p>
       {#if liff.isLoggedIn()}
         <p>ログイン済</p>
-        { liff.getProfile() }
+        { (await liff.getProfile()).userId }
       {:else}
         <p>ログイン前</p>
       {/if}
