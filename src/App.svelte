@@ -9,7 +9,7 @@
 
   let promise = init();
 
-  const userLineProfile = async () => {
+  let userLineProfile = async () => {
     return await liff.getProfile()
       .then((profile) => {
         return profile.displayName;
