@@ -16,7 +16,7 @@
   let userProfile = getUserProfile();
 
   let os = liff.getOS();
-ipt>
+</script>
 
 <main>
   <h1>create-liff-app</h1>
