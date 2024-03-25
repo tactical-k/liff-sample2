@@ -43,6 +43,8 @@
             "uuid": userUuid,
             "data": formData
           },
+        },
+        {
           headers: {
             'content-type': 'application/json',
             'x-hasura-admin-secret': import.meta.env.VITE_HASURA_ADMIN_SECRET
